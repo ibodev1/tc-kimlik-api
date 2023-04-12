@@ -1,5 +1,5 @@
 # TC Kimlik Doğrulama API
-[NVİ](https://nvi.gov.tr/) Tc Kimlik doğrulama api servisinin Rest API çevrilmiş servisi.
+[NVİ](https://nvi.gov.tr/) Bu servis, TC Kimlik doğrulama işlemlerini gerçekleştiren bir Rest API hizmetidir.
 
 [Servis URL](https://tckimlik.nvi.gov.tr/Service/KPSPublic.asmx?op=TCKimlikNoDogrula)
 
