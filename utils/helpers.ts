@@ -54,7 +54,7 @@ export const callNVIService = async (xmlBody: string): Promise<NVIServiceResult>
     headers.set('Content-Type', 'text/xml; charset=utf-8');
     const contentLength = new TextEncoder().encode(xmlBody).length.toString();
     headers.set('Content-Length', contentLength);
-    headers.set('SOAPAction', NVI_SOAP_ACTION);
+    // headers.set('SOAPAction', NVI_SOAP_ACTION);
 
     const serviceRequest = new Request(NVI_SERVICE_URL, {
       method: 'POST',
