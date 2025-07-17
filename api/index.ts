@@ -49,7 +49,7 @@ app.onError((err, c) => {
 
   const errRes: Respond = {
     status: 'error',
-    message: 'An unexpected error occurred.',
+    message: err instanceof Error ? err.message : 'An unexpected error occurred.',
     error: err instanceof Error ? err : 'Unknown error',
   };
   return c.json(errRes, 500);
@@ -72,3 +72,4 @@ export const POST = handler;
 export const PATCH = handler;
 export const PUT = handler;
 export const OPTIONS = handler;
+export default handler;

@@ -1,5 +1,6 @@
 import { XMLBuilder, XMLParser } from 'fast-xml-parser';
-import { Headers as NodeHeaders, Request as NodeRequest, default as nodeFetch } from 'node-fetch';
+import { HTTPException } from 'hono/http-exception';
+import type { ContentfulStatusCode } from 'hono/utils/http-status';
 import type { DogrulaType } from '../schemas/dogurla.schema';
 import type { NVIResponseParsed, NVIServiceResult } from '../types/nvi';
 import { NVI_SERVICE_URL, NVI_SOAP_ACTION } from './constants';
@@ -49,22 +50,25 @@ export const NVIXMLRequestBody = (body: DogrulaType): string => {
 
 export const callNVIService = async (xmlBody: string): Promise<NVIServiceResult> => {
   try {
-    const headers = new NodeHeaders();
+    const headers = new Headers();
     headers.set('Content-Type', 'text/xml; charset=utf-8');
     const contentLength = new TextEncoder().encode(xmlBody).length.toString();
     headers.set('Content-Length', contentLength);
     headers.set('SOAPAction', NVI_SOAP_ACTION);
 
-    const serviceRequest = new NodeRequest(NVI_SERVICE_URL, {
+    const serviceRequest = new Request(NVI_SERVICE_URL, {
       method: 'POST',
       headers: headers,
       body: xmlBody,
     });
 
-    const fetchResponse = await nodeFetch(serviceRequest);
+    const fetchResponse = await fetch(serviceRequest);
 
     if (!fetchResponse.ok) {
-      throw new Error(`HTTP error! Status: ${fetchResponse.status}`);
+      throw new HTTPException(fetchResponse.status as ContentfulStatusCode, {
+        message: `HTTP error! Status: ${fetchResponse.status}`,
+        cause: fetchResponse.statusText,
+      });
     }
 
     const xmlResponse = await fetchResponse.text();
@@ -80,12 +84,12 @@ export const callNVIService = async (xmlBody: string): Promise<NVIServiceResult>
 
     const parsedResponse = xmlParser.parse(xmlResponse) as NVIResponseParsed;
 
-    const isValid = parsedResponse['soap:Envelope']['soap:Body']?.TCKimlikNoDogrulaResponse?.TCKimlikNoDogrulaResult;
+    const isValid = parsedResponse?.['soap:Envelope']?.['soap:Body']?.TCKimlikNoDogrulaResponse?.TCKimlikNoDogrulaResult;
 
     return {
       rawXml: xmlResponse,
       parsed: parsedResponse,
-      isValid,
+      isValid: typeof isValid === 'boolean' ? isValid : false,
     };
   } catch (error) {
     console.error('Error calling NVI service:', error);

@@ -43,6 +43,7 @@ dogrulaRouter.post(
     if (result.isValid) {
       response.message = 'TC Kimlik No doğrulaması başarılı.';
     } else {
+      console.error('TC Kimlik No doğrulaması başarısız:', result.rawXml);
       response.message = 'TC Kimlik No doğrulaması başarısız.';
     }
 
