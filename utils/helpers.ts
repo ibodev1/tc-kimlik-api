@@ -1,4 +1,5 @@
 import { XMLBuilder, XMLParser } from 'fast-xml-parser';
+import { Headers as NodeHeaders, Request as NodeRequest, default as nodeFetch } from 'node-fetch';
 import type { DogrulaType } from '../schemas/dogurla.schema';
 import type { NVIResponseParsed, NVIServiceResult } from '../types/nvi';
 import { NVI_SERVICE_URL, NVI_SOAP_ACTION } from './constants';
@@ -48,19 +49,19 @@ export const NVIXMLRequestBody = (body: DogrulaType): string => {
 
 export const callNVIService = async (xmlBody: string): Promise<NVIServiceResult> => {
   try {
-    const headers = new Headers();
+    const headers = new NodeHeaders();
     headers.set('Content-Type', 'text/xml; charset=utf-8');
     const contentLength = new TextEncoder().encode(xmlBody).length.toString();
     headers.set('Content-Length', contentLength);
     headers.set('SOAPAction', NVI_SOAP_ACTION);
 
-    const serviceRequest = new Request(NVI_SERVICE_URL, {
+    const serviceRequest = new NodeRequest(NVI_SERVICE_URL, {
       method: 'POST',
       headers: headers,
       body: xmlBody,
     });
 
-    const fetchResponse = await fetch(serviceRequest);
+    const fetchResponse = await nodeFetch(serviceRequest);
 
     if (!fetchResponse.ok) {
       throw new Error(`HTTP error! Status: ${fetchResponse.status}`);
