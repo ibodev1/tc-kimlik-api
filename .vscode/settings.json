@@ -1,0 +1,14 @@
+{
+  "deno.enable": true,
+  "deno.cacheOnSave": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "biomejs.biome",
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+
+  /* Disable Linter / Formatter */
+  "biome.enabled": true,
+  "eslint.enable": false,
+  "prettier.enable": false
+}
