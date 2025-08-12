@@ -1,8 +1,8 @@
 import { Hono } from 'hono';
 import { validator } from 'hono/validator';
-import { dogrulaSchema } from '../schemas/dogurla.schema';
-import type { Respond } from '../types/respond';
-import { callNVIService, getAge, NVIXMLRequestBody } from '../utils/helpers';
+import { dogrulaSchema } from '../schemas/dogurla.schema.ts';
+import type { Respond } from '../types/respond.ts';
+import { callNVIService, getAge, NVIXMLRequestBody } from '../utils/helpers.ts';
 
 const dogrulaRouter = new Hono();
 

@@ -1,9 +1,9 @@
 import { XMLBuilder, XMLParser } from 'fast-xml-parser';
 import { HTTPException } from 'hono/http-exception';
 import type { ContentfulStatusCode } from 'hono/utils/http-status';
-import type { DogrulaType } from '../schemas/dogurla.schema';
-import type { NVIResponseParsed, NVIServiceResult } from '../types/nvi';
-import { NVI_SERVICE_URL, NVI_SOAP_ACTION } from './constants';
+import type { DogrulaType } from '../schemas/dogurla.schema.ts';
+import type { NVIResponseParsed, NVIServiceResult } from '../types/nvi.ts';
+import { NVI_SERVICE_URL } from './constants.ts';
 
 export const getAge = (dateString: string): number => {
   const today = new Date();

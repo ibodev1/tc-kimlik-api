@@ -1,17 +1,12 @@
 import { Hono } from 'hono';
+import { getConnInfo } from 'hono/deno';
 import { HTTPException } from 'hono/http-exception';
-
 import { logger } from 'hono/logger';
 import { requestId } from 'hono/request-id';
 import { secureHeaders } from 'hono/secure-headers';
-import { getConnInfo, handle } from 'hono/vercel';
 import { rateLimiter } from 'hono-rate-limiter';
-import dogrulaRouter from '../routes/dogrula';
-import type { Respond } from '../types/respond';
-
-export const config = {
-  runtime: 'edge',
-};
+import dogrulaRouter from './routes/dogrula.ts';
+import type { Respond } from './types/respond.ts';
 
 const app = new Hono().basePath('/api');
 
@@ -65,11 +60,4 @@ app.notFound((c) => {
   return c.json(notFoundResponse, 404);
 });
 
-const handler = handle(app);
-
-export const GET = handler;
-export const POST = handler;
-export const PATCH = handler;
-export const PUT = handler;
-export const OPTIONS = handler;
-export default handler;
+Deno.serve(app.fetch);
