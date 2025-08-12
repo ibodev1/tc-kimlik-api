@@ -8,7 +8,10 @@ amaçlarla kullanılmaması gerekmektedir. İletişim için [mail adresim](mailt
 ## Kullanım
 
 POST Request atacağınız url adresi:
-[https://tc-kimlik.vercel.app/api/dogrula](https://tc-kimlik.vercel.app/api/dogrula)
+[https://tc-kimlik.ibrahimo.dev/api/dogrula](https://tc-kimlik.ibrahimo.dev/api/dogrula)
+
+Alternatif:
+[https://tc-kimlik.ibodev.deno.net/api/dogrula](https://tc-kimlik.ibodev.deno.net/api/dogrula) 
 
 Örnek Body:
 
